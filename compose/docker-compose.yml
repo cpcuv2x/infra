@@ -4,7 +4,14 @@ services:
     build:
       context: ../../web-service
       dockerfile: Dockerfile.development
-    env_file: ../../web-service/.env
+    environment:
+      APP_PORT: ${WS_APP_PORT}
+      JWT_SECRET: ${WS_JWT_SECRET}
+      JWT_EXPIRATION_TIME: ${WS_JWT_EXPIRATION_TIME}
+      DATABASE_URL: ${WS_DATABASE_URL}
+      KAFKA_ENABLED: ${WS_KAFKA_ENABLED}
+      KAFKA_HOST: ${WS_KAFKA_HOST}
+      KAFKA_JSON_EVENTS_TOPIC_NAME: ${WS_KAFKA_JSON_EVENTS_TOPIC_NAME}
     ports:
       - "5000:5000"
     volumes:
