@@ -3,7 +3,7 @@ services:
   web-service:
     build:
       context: ../../web-service
-      dockerfile: Dockerfile.development
+      dockerfile: Dockerfile.dev-local
     environment:
       APP_PORT: ${WS_APP_PORT}
       JWT_SECRET: ${WS_JWT_SECRET}

@@ -15,6 +15,7 @@ services:
     volumes:
       - web-service-node-modules:/usr/src/app/node_modules
       - web-service-images:/usr/src/app/.images
+    restart: always
 
   postgresdb:
     image: postgres
