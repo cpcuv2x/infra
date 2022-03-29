@@ -1,0 +1,23 @@
+name: CD for dev
+on:
+  workflow_dispatch:
+    inputs:
+      ws_image_tag:
+        description: "Web service image tag"
+        required: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Hamo server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            export WS_IMAGE_TAG=${{ github.event.inputs.ws_image_tag }}
+            cd /home/cpcuv2x/cpcuv2x/infra/compose-hamo
+            docker-compose up -d
