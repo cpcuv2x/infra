@@ -19,5 +19,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             export WS_IMAGE_TAG=${{ github.event.inputs.ws_image_tag }}
-            cd /home/cpcuv2x/cpcuv2x/infra/compose-hamo
+            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
             docker-compose up -d
