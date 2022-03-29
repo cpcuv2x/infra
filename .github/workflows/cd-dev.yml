@@ -4,6 +4,7 @@ on:
     inputs:
       ws_image_tag:
         description: "Web service image tag"
+        default: "latest-dev"
         required: true
 jobs:
   deploy:
@@ -20,4 +21,7 @@ jobs:
           script: |
             export WS_IMAGE_TAG=${{ github.event.inputs.ws_image_tag }}
             cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
+            git fetch --prune && git checkout --detach origin/dev
+            docker-compose pull web-service
             docker-compose up -d
+            docker image prune --force
