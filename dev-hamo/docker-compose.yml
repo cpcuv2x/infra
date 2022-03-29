@@ -13,7 +13,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - web-service-node-modules:/usr/src/app/node_modules
       - web-service-images:/usr/src/app/.images
     restart: always
 
@@ -84,7 +83,6 @@ services:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
 
 volumes:
-  web-service-node-modules:
   web-service-images:
   postgresdb-pgdata:
   zoo-data:
