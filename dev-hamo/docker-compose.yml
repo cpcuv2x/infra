@@ -87,6 +87,8 @@ services:
     ports:
       - "1935:1935"
       - "8080:80"
+    volumes:
+      - "media-server-hls:/opt/data/hls"
 
 volumes:
   web-service-images:
@@ -96,3 +98,4 @@ volumes:
   kafka-data:
   influxdb-data:
   influxdb-config:
+  media-server-hls:
