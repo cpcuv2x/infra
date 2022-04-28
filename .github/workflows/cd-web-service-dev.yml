@@ -1,4 +1,4 @@
-name: CD for dev
+name: CD Web Service (Dev)
 on:
   workflow_dispatch:
     inputs:
@@ -7,11 +7,10 @@ on:
         default: "latest-dev"
         required: true
 jobs:
-  deploy:
+  deploy-web-service:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to Hamo server
+      - name: Deploy Web Service
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -25,3 +24,18 @@ jobs:
             docker-compose pull web-service
             docker-compose up -d
             docker image prune --force
+  migrate-dev:
+    runs-on: ubuntu-latest
+    needs: deploy-web-service
+    steps:
+      - name: Migrate PostgresDB
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
+            git fetch --prune && git checkout --detach origin/dev
+            docker-compose exec -T web-service pnpx prisma migrate dev
