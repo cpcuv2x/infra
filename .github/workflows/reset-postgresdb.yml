@@ -1,4 +1,4 @@
-name: Reset PostgresDB (Dev)
+name: Reset PostgresDB
 on:
   workflow_dispatch:
 jobs:
@@ -13,6 +13,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
-            git fetch --prune && git checkout --detach origin/dev
+            cd /home/cpcuv2x/cpcuv2x/infra/prod
+            git fetch --prune && git checkout --detach origin/${{ github.ref_name }}
             docker-compose exec -T web-service pnpx prisma migrate reset --force

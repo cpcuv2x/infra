@@ -1,14 +1,14 @@
-name: CD (Dev)
+name: CD
 on:
   workflow_dispatch:
     inputs:
       ws_image_tag:
         description: "Web service image tag"
-        default: "latest-dev"
+        default: "latest"
         required: true
       wc_image_tag:
         description: "Web client image tag"
-        default: "latest-dev"
+        default: "latest"
         required: true
 jobs:
   deploy-web-service-and-web-client:
@@ -24,13 +24,13 @@ jobs:
           script: |
             export WS_IMAGE_TAG=${{ github.event.inputs.ws_image_tag }}
             export WC_IMAGE_TAG=${{ github.event.inputs.wc_image_tag }}
-            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
-            git fetch --prune && git checkout --detach origin/dev
+            cd /home/cpcuv2x/cpcuv2x/infra/prod
+            git fetch --prune && git checkout --detach origin/${{ github.ref_name }}
             docker-compose pull web-service
             docker-compose pull web-client
             docker-compose up -d
             docker image prune --force
-  migrate-dev:
+  migrate:
     runs-on: ubuntu-latest
     needs: deploy-web-service-and-web-client
     steps:
@@ -42,6 +42,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
-            git fetch --prune && git checkout --detach origin/dev
-            docker-compose exec -T web-service pnpx prisma migrate dev
+            cd /home/cpcuv2x/cpcuv2x/infra/prod
+            git fetch --prune && git checkout --detach origin/${{ github.ref_name }}
+            docker-compose exec -T web-service pnpx prisma migrate deploy
