@@ -34,7 +34,7 @@ services:
   web-client:
     build:
       context: ../../web-client
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
       VITE_GOOGLE_MAPS_API_KEY: ${WC_VITE_GOOGLE_MAPS_API_KEY}
       VITE_WEB_SERVICES_URL: ${WC_VITE_WEB_SERVICES_URL}
