@@ -119,7 +119,7 @@ services:
   media-server:
     image: alfg/nginx-rtmp
     ports:
-      - "1935:1935"
+      - "9000:1935"
       - "8080:80"
     volumes:
       - "media-server-hls:/opt/data/hls"
