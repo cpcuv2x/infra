@@ -59,8 +59,6 @@ services:
 
   zoo:
     image: confluentinc/cp-zookeeper:7.0.1
-    ports:
-      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_SERVER_ID: 1
