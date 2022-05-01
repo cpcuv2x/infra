@@ -1,4 +1,4 @@
-name: Reset InfluxDB (Dev)
+name: Reset InfluxDB
 on:
   workflow_dispatch:
 jobs:
@@ -13,7 +13,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/cpcuv2x/cpcuv2x/infra/dev-hamo
-            git fetch --prune && git checkout --detach origin/dev
-            docker-compose exec -T influxdb influx delete --bucket my-bucket \
+            cd /home/cpcuv2x/cpcuv2x/infra/prod
+            git fetch --prune && git checkout --detach origin/${{ github.ref_name }}
+            docker-compose exec -T influxdb influx delete --bucket cpcuv2x \
             --start 1970-01-01T00:00:00Z --stop 2038-01-19T03:14:07Z
