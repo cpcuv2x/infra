@@ -30,6 +30,9 @@ services:
       INFLUX_TOKEN: ${WS_INFLUX_TOKEN}
       INFLUX_BUCKET: ${WS_INFLUX_BUCKET}
       INFLUX_ORG: ${WS_INFLUX_ORG}
+      REDIS_HOST: ${WS_REDIS_HOST}
+      REDIS_PASSWORD: ${WS_REDIS_PASSWORD}
+      REDIS_PORT: ${WS_REDIS_PORT}
     ports:
       - "5000:5000"
     volumes:
@@ -126,6 +129,17 @@ services:
       - "8080:80"
     volumes:
       - "media-server-hls:/opt/data/hls"
+
+  redis:
+    image: redis:7.0.2-alpine
+    hostname: redis
+    restart: always
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+      - redis:/data
 
 volumes:
   web-service-images:
