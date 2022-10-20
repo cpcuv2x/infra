@@ -120,6 +120,9 @@ services:
       - INFLUX_TOKEN=${TELEGRAF_INFLUX_TOKEN}
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
+    depends_on: 
+      - kafka
+    restart: on-failure
 
   media-server:
     image: alfg/nginx-rtmp
