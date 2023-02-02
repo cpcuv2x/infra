@@ -29,7 +29,7 @@ services:
       REDIS_PORT: ${WS_REDIS_PORT}
 
     ports:
-      - "5001:5000"
+      - "5002:5000"
     volumes:
       - ../../web-service/src:/usr/src/app/src
       - ../../web-service/prisma:/usr/src/app/prisma
@@ -93,6 +93,7 @@ services:
       - kafka-data:/var/lib/kafka/data
     depends_on:
       - zoo
+    restart: on-failure
 
   influxdb:
     image: influxdb:2.1
